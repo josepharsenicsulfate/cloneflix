@@ -1,0 +1,85 @@
+body{
+    width: 100vw;
+    height: 100vh;
+
+    margin: 0;
+
+    background-color: #1a1a1a;
+
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+}
+
+.main{
+    padding: 15px;
+}
+
+.main > *{
+    padding: 15px;
+}
+
+.nav{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+.nav .branding img{
+    width: 36px;
+    vertical-align: baseline;
+}
+
+.nav .branding span{
+    font-size: 36px;
+}
+
+.nav .search{
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.nav .search > * {
+    padding: 0;
+}
+
+.nav .search input[type="text"]{
+    border: none;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    width: 100%;
+}
+
+.nav .search button{
+    border: none;
+    outline: none;
+    background-color: #fff;
+    font-size: 18px;
+}
+
+#poster-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#poster-container > * {
+    width: 100%;
+    min-height: 250px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    outline: none;
+}
+
+#poster-container > *:hover {
+    transform: scale(1.01);
+    transition: 0.3s ease;
+    box-shadow: 0 0 10px 1px #b8090c;
+}
