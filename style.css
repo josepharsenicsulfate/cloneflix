@@ -18,6 +18,10 @@ body{
     padding: 15px;
 }
 
+.main h1{
+    margin: 0;
+}
+
 .nav{
     display: flex;
     flex-flow: column wrap;
@@ -26,7 +30,7 @@ body{
 }
 
 .nav .branding img{
-    width: 36px;
+    max-width: 250px;
     vertical-align: baseline;
 }
 
@@ -61,6 +65,29 @@ body{
     outline: none;
     background-color: #fff;
     font-size: 18px;
+}
+
+#discover-container{
+    display: flex;
+    flex-flow: row nowrap;
+    overflow-x: scroll;
+    gap: 15px;
+}
+
+#discover-container > * {
+    border-radius: 50%;
+    min-width: 100px;
+    min-height: 100px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    outline: none;
+}
+
+#discover-container > *:hover {
+    transition: 0.3s ease;
+    box-shadow: 0 0 10px 1px #b8090c;
 }
 
 #poster-container{
