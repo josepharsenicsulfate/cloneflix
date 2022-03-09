@@ -18,7 +18,7 @@ body{
     padding: 15px;
 }
 
-.main h1{
+.main :is(h1,h2){
     margin: 0;
 }
 
@@ -109,4 +109,9 @@ body{
     transform: scale(1.01);
     transition: 0.3s ease;
     box-shadow: 0 0 10px 1px #b8090c;
+}
+
+#video-container > * {
+    border: none;
+    outline: none;
 }

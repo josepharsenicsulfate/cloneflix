@@ -1,30 +1,42 @@
-let apiKey = "99226ac4f42f7c92e9feb899be502fe2"
-let keyword = "avengers"
-let discoverUrl = "https://api.themoviedb.org/3/discover/movie?api_key="+apiKey+"&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate"
+const apiKey = "99226ac4f42f7c92e9feb899be502fe2"
+const discoverUrl = "https://api.themoviedb.org/3/discover/movie?api_key="+apiKey+"&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate"
+
+let keyword = "harry potter"
+let vidsrc = "JfVOs4VSpmA"
+let id
 
 // selecting main elements
 let discoverContainer = document.getElementById("discover-container")
 let posterContainer = document.getElementById("poster-container")
-let movieDataContainer = document.getElementById("movie-data")
-let vidsrc = "JfVOs4VSpmA"
+let videoContainer = document.getElementById("video-container")
 
 getMovieData(discoverUrl, discoverContainer)
-getMovieData(urlGenerator(keyword, apiKey), posterContainer)
-getMovieVideos(vidsrc)
+getMovieData(urlGeneratorKeyword(keyword, apiKey), posterContainer)
 
 // generate new url
-function urlGenerator(keyword, apiKey){
+function urlGeneratorKeyword(keyword, apiKey){
     url = "https://api.themoviedb.org/3/search/movie?api_key="+apiKey+"&query="+keyword
+    return url
+}
+
+function urlGeneratorMovieId(id, apiKey){
+    url = "https://api.themoviedb.org/3/movie/"+id+"?api_key="+apiKey+"&language=en-US"
+    return url
+}
+function urlGeneratorVideos(id, apiKey){
+    url = "https://api.themoviedb.org/3/movie/"+id+"/videos?api_key="+apiKey+"&language=en-US"
     return url
 }
 
 //  using the API response
 async function getMovieData(urlFetch, container){
+    if(container == null){
+        return
+    }
     container.innerHTML = ''
     fetch(urlFetch)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             for(let i = 0; i < data.results.length; i++){
                 if(data.results[i].poster_path != null){
                     setPoster(data.results[i].poster_path, data.results[i].id, container)
@@ -34,12 +46,37 @@ async function getMovieData(urlFetch, container){
         .catch(console.error())
 }
 
-function getMovieVideos(vidsrc){
-    let vidplayer = document.createElement("iframe")
-    vidplayer.style.width = "100%"
-    vidplayer.style.height = "auto"
-    vidplayer.src = "https://www.youtube.com/embed/"+vidsrc
-    movieDataContainer.appendChild(vidplayer)
+async function generateOverlay(urlFetch){
+    let detailsContainer = document.getElementById("details")
+    let summaryContainer = document.getElementById("summary")
+
+    fetch(urlFetch)
+        .then(response => response.json())
+        .then(data => {
+            setDetails(
+                data.poster_path, 
+                data.original_title, 
+                data.vote_average, 
+                data.release_date, 
+                detailsContainer
+            )
+            setSummary(data.overview, summaryContainer)
+        })
+        .catch(console.error())
+
+    getVideos(urlGeneratorVideos(id, apiKey))
+}
+
+async function getVideos(urlFetch){
+    videoContainer.innerHTML = ''
+    fetch(urlFetch)
+        .then(response => response.json())
+        .then(data => {
+            for(let i = 0; i < data.results.length; i++){
+                setVideos(data.results[i].key, videoContainer)
+            }
+        })
+        .catch(console.error())
 }
 
 //  getting poster
@@ -52,10 +89,30 @@ function setPoster(posterID, movieID, parent){
     parent.appendChild(poster)
 }
 
+function setDetails(poster, title, rating, release, container){
+    elements = container.children
+    elements[0].src = "https://image.tmdb.org/t/p/original"+poster
+    elements[0].style.width = "150px"
+    elements[1].innerHTML = title
+    elements[2].innerHTML = release
+    elements[3].innerHTML = rating
+}
+
+function setSummary(summary, container){
+    elements = container.children
+    elements[1].innerHTML = summary
+}
+
+function setVideos(key, container){
+    container.innerHTML += `
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/${key}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    `
+}
+
 // generating new content based on search keyword
 function search(){
     let searchTerm = document.getElementById('search').value
-    getMovieData(urlGenerator(searchTerm, apiKey), posterContainer)
+    getMovieData(urlGeneratorKeyword(searchTerm, apiKey), posterContainer)
 }
 
 document.addEventListener('keydown', (event) => {
@@ -66,6 +123,9 @@ document.addEventListener('keydown', (event) => {
     }
 })
 
-document.addEventListener('click', (event) =>{
-    console.log(event.target.value)
+document.addEventListener('click', (event) => {
+    if(event.target.value != null){
+        id = event.target.value
+        generateOverlay(urlGeneratorMovieId(id, apiKey))
+    }
 })
