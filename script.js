@@ -4,7 +4,7 @@ const discoverUrl = "https://api.themoviedb.org/3/discover/movie?api_key="+apiKe
 let keyword = "avengers"
 let vidsrc = "JfVOs4VSpmA"
 let id
-let datavar
+let videoList = []
 
 // selecting main elements
 let discoverContainer = document.getElementById("discover-container")
@@ -36,7 +36,7 @@ async function getMovieData(urlFetch, container){
     }
     
     container.innerHTML = ''
-    fetch(urlFetch)
+    await fetch(urlFetch)
         .then(response => response.json())
         .then(data => {
             for(let i = 0; i < data.results.length; i++){
@@ -44,7 +44,6 @@ async function getMovieData(urlFetch, container){
                     setPoster(data.results[i].poster_path, data.results[i].id, container)
                 }
             }
-            datavar = data
         })
         .catch(console.error())
 }
@@ -53,7 +52,7 @@ async function generateOverlay(urlFetch){
     let detailsContainer = document.getElementById("details")
     let summaryContainer = document.getElementById("summary")
 
-    fetch(urlFetch)
+    await fetch(urlFetch)
         .then(response => response.json())
         .then(data => {
             setDetails(
@@ -75,11 +74,13 @@ async function getVideos(urlFetch){
     fetch(urlFetch)
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             for(let i = 0; i < data.results.length; i++){
-                setVideos(data.results[i].key, videoContainer)
+                videoList.push(data.results.key)
             }
         })
         .catch(console.error())
+        console.log(videoList)
 }
 
 //  getting poster

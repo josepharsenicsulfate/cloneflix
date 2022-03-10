@@ -151,11 +151,10 @@ body{
 }
 
 .overlay{
-    position: absolute;
+    position: relative;
     overflow: scroll;
-    top: 0;
-    left: 0;
-    /* background-color: rgba(184, 9, 12, 0.8); */
+    height: 100%;
+
     background-color: rgba(26, 26, 26, 0.97);
     z-index: 10;
 }
