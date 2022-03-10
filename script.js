@@ -95,7 +95,7 @@ function setDetails(poster, title, rating, release, container){
     elements[0].style.width = "150px"
     elements[1].innerHTML = title
     elements[2].innerHTML = release
-    elements[3].innerHTML = rating
+    elements[3].innerHTML = rating + '&nbsp;<i class="fa-solid fa-star"></i>'
 }
 
 function setSummary(summary, container){
@@ -124,8 +124,14 @@ document.addEventListener('keydown', (event) => {
 })
 
 document.addEventListener('click', (event) => {
-    if(event.target.value != null){
-        id = event.target.value
-        generateOverlay(urlGeneratorMovieId(id, apiKey))
+    if(event.target.id == "close-btn"){
+        document.getElementsByClassName('overlay')[0].classList.add('hide')
+    }else if(event.target.id != "search"){
+        if(event.target.value != null){
+            id = event.target.value
+            generateOverlay(urlGeneratorMovieId(id, apiKey))
+            document.getElementsByClassName('overlay')[0].classList.remove('hide')
+        }
     }
+    console.log(event.target.id)
 })

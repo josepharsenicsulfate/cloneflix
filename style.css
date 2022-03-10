@@ -67,6 +67,10 @@ body{
     font-size: 18px;
 }
 
+.content > * {
+    padding: 15px;
+}
+
 #discover-container{
     display: flex;
     flex-flow: row nowrap;
@@ -114,4 +118,26 @@ body{
 #video-container > * {
     border: none;
     outline: none;
+}
+
+.overlay{
+    position: absolute;
+    overflow: scroll;
+    top: 0;
+    left: 0;
+    /* background-color: rgba(184, 9, 12, 0.8); */
+    background-color: rgba(26, 26, 26, 0.97);
+    z-index: 10;
+}
+
+.overlay * h1{
+    font-size: 24px;
+}
+
+.overlay * p{
+    color: #ccc;
+}
+
+.hide{
+    display: none;
 }

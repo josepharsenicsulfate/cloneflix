@@ -31,14 +31,9 @@
                 <button type="submit" onclick="search()"><i class="fas fa-search"></i></button>
             </div>
         </div>
-
-        <h1>Popular Now</h1>
-        <div id="discover-container" class="container"></div>
-
-        <h1>Search Results</h1>
-        <div id="poster-container" class="container"></div>
-
-        <div class="overlay">
+        <!-- only show when movie is clicked -->
+        <div class="overlay hide">
+            <i id="close-btn" class="fas fa-times" style="float: right; font-size: 36px;"></i>
             <div id="details">
                 <img src="" alt="">
                 <h1></h1>
@@ -47,9 +42,16 @@
             </div>
             <div id="summary">
                 <h1>Summary</h1>
-                <h2></h2>
+                <p></p>
             </div>
             <div id="video-container"></div>
+        </div>
+        <div class="content">
+            <h1>Popular Now</h1>
+            <div id="discover-container" class="container"></div>
+    
+            <h1>Search Results</h1>
+            <div id="poster-container" class="container"></div>
         </div>
     </div>
     <script src="script.js"></script>
