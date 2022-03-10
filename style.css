@@ -1,4 +1,4 @@
-::-webkit-scrollbar{
+/* ::-webkit-scrollbar{
     width: 5px;
     height: 5px;
 }
@@ -13,7 +13,7 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background: #b8090c; 
-}
+} */
 
 body{
     width: 100vw;
@@ -182,8 +182,6 @@ body{
     }
 
     #video-container > * {
-        border: none;
-        outline: none;
         width: 330px;
         height: 210px;
     }
@@ -206,11 +204,19 @@ body{
         grid-template-columns: repeat(4, 1fr);
     }
 
+    #poster-container > * {
+        min-height: 400px;
+    }
 
     #video-container > * {
-        border: none;
-        outline: none;
         width: 450px;
         height: 350px;
+    }
+}
+
+@media (min-width: 1440px){
+    #video-container > * {
+        width: 420px;
+        height: 270px;
     }
 }

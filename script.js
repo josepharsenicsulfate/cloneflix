@@ -4,6 +4,7 @@ const discoverUrl = "https://api.themoviedb.org/3/discover/movie?api_key="+apiKe
 let keyword = "avengers"
 let vidsrc = "JfVOs4VSpmA"
 let id
+let datavar
 
 // selecting main elements
 let discoverContainer = document.getElementById("discover-container")
@@ -38,12 +39,12 @@ async function getMovieData(urlFetch, container){
     fetch(urlFetch)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             for(let i = 0; i < data.results.length; i++){
                 if(data.results[i].poster_path != null){
                     setPoster(data.results[i].poster_path, data.results[i].id, container)
                 }
             }
+            datavar = data
         })
         .catch(console.error())
 }
@@ -107,7 +108,7 @@ function setSummary(summary, container){
 
 function setVideos(key, container){
     container.innerHTML += `
-    <iframe src="https://www.youtube.com/embed/${key}" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/${key}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     `
 }
 
@@ -131,6 +132,7 @@ document.addEventListener('click', (event) => {
     }else if(event.target.id != "search"){
         if(event.target.value != null){
             id = event.target.value
+            console.log(id)
             generateOverlay(urlGeneratorMovieId(id, apiKey))
             document.getElementsByClassName('overlay')[0].classList.remove('hide')
         }
