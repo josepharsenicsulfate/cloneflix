@@ -1,7 +1,7 @@
 const apiKey = "99226ac4f42f7c92e9feb899be502fe2"
 const discoverUrl = "https://api.themoviedb.org/3/discover/movie?api_key="+apiKey+"&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate"
 
-let keyword = "harry potter"
+let keyword = "avengers"
 let vidsrc = "JfVOs4VSpmA"
 let id
 
@@ -33,10 +33,12 @@ async function getMovieData(urlFetch, container){
     if(container == null){
         return
     }
+    
     container.innerHTML = ''
     fetch(urlFetch)
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             for(let i = 0; i < data.results.length; i++){
                 if(data.results[i].poster_path != null){
                     setPoster(data.results[i].poster_path, data.results[i].id, container)
@@ -105,7 +107,7 @@ function setSummary(summary, container){
 
 function setVideos(key, container){
     container.innerHTML += `
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/${key}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/${key}" allowfullscreen></iframe>
     `
 }
 
@@ -133,5 +135,4 @@ document.addEventListener('click', (event) => {
             document.getElementsByClassName('overlay')[0].classList.remove('hide')
         }
     }
-    console.log(event.target.id)
 })
